@@ -24,7 +24,6 @@ export default function Home() {
   const [bots, setBots] = useState<Bot[]>([]);
   const [target, setTarget] = useState("");
   const [quantity, setQuantity] = useState(100);
-  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     fetch("/api/orders")
@@ -57,68 +56,68 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">SMM Botnet - Instagram Follower Reseller</h1>
-        <p className="mb-6 text-green-400">WebSocket: {connected ? "Connected" : "Disconnected"}</p>
+    <div className="min-h-screen flex flex-col" style={{backgroundColor: "#111827", color: "#ffffff"}}>
+      <div className="max-w-7xl mx-auto p-6 w-full">
+        <h1 className="text-3xl font-bold mb-6">SMM Botnet - Instagram Follower Reseller</h1>
         
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-slate-800 p-4 rounded">
-            <h2 className="text-xl mb-2">Total Orders</h2>
-            <p className="text-4xl font-bold">{orders.length}</p>
+        <div className="flex flex-row gap-4 mb-6">
+          <div className="flex-1 p-4 rounded-lg" style={{backgroundColor: "#1f2937"}}>
+            <h2 className="text-lg mb-1">Total Orders</h2>
+            <p className="text-3xl font-bold">{orders.length}</p>
           </div>
-          <div className="bg-slate-800 p-4 rounded">
-            <h2 className="text-xl mb-2">Completed</h2>
-            <p className="text-4xl font-bold text-green-400">{orders.filter(o => o.status === "completed").length}</p>
+          <div className="flex-1 p-4 rounded-lg" style={{backgroundColor: "#1f2937"}}>
+            <h2 className="text-lg mb-1">Completed</h2>
+            <p className="text-3xl font-bold" style={{color: "#4ade80"}}>{orders.filter(o => o.status === "completed").length}</p>
           </div>
-          <div className="bg-slate-800 p-4 rounded">
-            <h2 className="text-xl mb-2">Active Bots</h2>
-            <p className="text-4xl font-bold text-blue-400">{bots.filter(b => b.health_score > 70).length}</p>
+          <div className="flex-1 p-4 rounded-lg" style={{backgroundColor: "#1f2937"}}>
+            <h2 className="text-lg mb-1">Active Bots</h2>
+            <p className="text-3xl font-bold" style={{color: "#60a5fa"}}>{bots.filter(b => b.health_score > 70).length}</p>
           </div>
         </div>
 
-        <div className="bg-slate-800 p-6 rounded-lg mb-8">
-          <h2 className="text-2xl mb-4">New Order</h2>
-          <div className="flex gap-4">
+        <div className="p-6 rounded-lg mb-6" style={{backgroundColor: "#1f2937"}}>
+          <h2 className="text-xl mb-3">New Order</h2>
+          <div className="flex gap-3">
             <input
               placeholder="Target username"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
-              className="flex-1 p-3 bg-slate-700 rounded"
+              className="flex-1 p-3 rounded"
+              style={{backgroundColor: "#374151", color: "#ffffff"}}
             />
             <input
-              type="number"
-              placeholder="Quantity"
+              type="number" placeholder="Quantity"
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value) || 100)}
-              className="w-32 p-3 bg-slate-700 rounded"
+              className="w-32 p-3 rounded"
+              style={{backgroundColor: "#374151", color: "#ffffff"}}
             />
-            <button onClick={createOrder} className="px-6 py-3 bg-blue-600 rounded hover:bg-blue-700">
+            <button onClick={createOrder} className="px-6 py-3 rounded" style={{backgroundColor: "#3b82f6", color: "#ffffff"}}>
               Create
             </button>
           </div>
-          <p className="mt-2 text-sm text-slate-400">Est. Price: ${(quantity * 0.05).toFixed(2)}</p>
+          <p className="mt-2 text-sm" style={{color: "#9ca3af"}}>Est. Price: ${(quantity * 0.05).toFixed(2)}</p>
         </div>
 
-        <div className="bg-slate-800 p-6 rounded-lg mb-8">
-          <h2 className="text-2xl mb-4">Bots Status</h2>
+        <div className="p-6 rounded-lg mb-6" style={{backgroundColor: "#1f2937"}}>
+          <h2 className="text-xl mb-3">Bots Status</h2>
           <div className="grid md:grid-cols-3 gap-4">
             {bots.map(bot => (
-              <div key={bot.id} className="bg-slate-700 p-4 rounded">
+              <div key={bot.id} className="p-4 rounded" style={{backgroundColor: "#374151"}}>
                 <p className="font-bold">@{bot.username}</p>
                 <p>Followers: {bot.followers_count}</p>
                 <p>Today: {bot.daily_follows}/{bot.max_follows}</p>
-                <p>Health: <span className={bot.health_score > 70 ? "text-green-400" : "text-yellow-400"}>{bot.health_score}</span></p>
+                <p>Health: <span style={{color: bot.health_score > 70 ? "#4ade80" : "#facc15"}}>{bot.health_score}</span></p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-slate-800 p-6 rounded-lg">
-          <h2 className="text-2xl mb-4">Orders</h2>
+        <div className="p-6 rounded-lg" style={{backgroundColor: "#1f2937"}}>
+          <h2 className="text-xl mb-3">Orders</h2>
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-700">
+              <tr style={{borderBottom: "1px solid #374151"}}>
                 <th className="text-left p-2">ID</th>
                 <th className="text-left p-2">Target</th>
                 <th className="text-left p-2">Progress</th>
@@ -127,12 +126,12 @@ export default function Home() {
             </thead>
             <tbody>
               {orders.map(order => (
-                <tr key={order.id} className="border-b border-slate-700">
+                <tr key={order.id} style={{borderBottom: "1px solid #374151", padding: "8px 0"}}>
                   <td className="p-2">#{order.id}</td>
                   <td className="p-2">@{order.target_username}</td>
                   <td className="p-2">
-                    <div className="w-full bg-slate-700 rounded h-2">
-                      <div className="bg-blue-500 h-2 rounded" style={{width: `${(order.delivered/order.quantity)*100}%`}} />
+                    <div className="w-full rounded h-2" style={{backgroundColor: "#374151"}}>
+                      <div className="h-2 rounded" style={{backgroundColor: "#3b82f6", width: `${(order.delivered/order.quantity)*100}%`}} />
                     </div>
                   </td>
                   <td className="p-2">{order.status}</td>
